@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>1a7fc7d8-1dd6-4bee-a10e-e012b245f8cb</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210213134204_updating Idnames.cs" />
+    <Compile Remove="Migrations\20210213134204_updating Idnames.Designer.cs" />
+    <Compile Remove="Migrations\20210214091901_NewUpdate.cs" />
+    <Compile Remove="Migrations\20210214091901_NewUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20210214092311_test2.cs" />
+    <Compile Remove="Migrations\20210214092311_test2.Designer.cs" />
+    <Compile Remove="Migrations\20210214092548_newTesr.cs" />
+    <Compile Remove="Migrations\20210214092548_newTesr.Designer.cs" />
+    <Compile Remove="Migrations\20210214092658_newTesr.cs" />
+    <Compile Remove="Migrations\20210214092658_newTesr.Designer.cs" />
+    <Compile Remove="Migrations\20210214092854_newTesr.cs" />
+    <Compile Remove="Migrations\20210214092854_newTesr.Designer.cs" />
+    <Compile Remove="Migrations\20210214092953_newTesr.cs" />
+    <Compile Remove="Migrations\20210214092953_newTesr.Designer.cs" />
+    <Compile Remove="Migrations\20210214093014_newTest.cs" />
+    <Compile Remove="Migrations\20210214093014_newTest.Designer.cs" />
+    <Compile Remove="Migrations\20210214093113_newTest.cs" />
+    <Compile Remove="Migrations\20210214093113_newTest.Designer.cs" />
+    <Compile Remove="Migrations\20210214093749_newTest.cs" />
+    <Compile Remove="Migrations\20210214093749_newTest.Designer.cs" />
+    <Compile Remove="Migrations\20210227162128_tester.cs" />
+    <Compile Remove="Migrations\20210227162128_tester.Designer.cs" />
+    <Compile Remove="Migrations\20210227162257_new.cs" />
+    <Compile Remove="Migrations\20210227162257_new.Designer.cs" />
+    <Compile Remove="Migrations\20210227162431_newer.cs" />
+    <Compile Remove="Migrations\20210227162431_newer.Designer.cs" />
+    <Compile Remove="Migrations\20210227162637_new.cs" />
+    <Compile Remove="Migrations\20210227162637_new.Designer.cs" />
+    <Compile Remove="Migrations\20210227163038_g.cs" />
+    <Compile Remove="Migrations\20210227163038_g.Designer.cs" />
+    <Compile Remove="Migrations\20210227165034_i.cs" />
+    <Compile Remove="Migrations\20210227165034_i.Designer.cs" />
+    <Compile Remove="Migrations\20210227171921_teste.cs" />
+    <Compile Remove="Migrations\20210227171921_teste.Designer.cs" />
+    <Compile Remove="Migrations\20210227172431_tese.cs" />
+    <Compile Remove="Migrations\20210227172431_tese.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+
+</Project>
