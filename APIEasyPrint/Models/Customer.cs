@@ -10,7 +10,9 @@ namespace APIEasyPrint.Models
 {
     public class Customer : IdentityUser
     {
-       
+        [Key]
+        public Guid Id { set; get; }
+
         public List<Suggestion> suggestions { set; get; }
         public List<PrivatePromotionCode> privatePromotionCodes { set; get; }
         public List<Document> documents { set; get; }

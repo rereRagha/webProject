@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace APIEasyPrint.APIModels
 {
-    public class SignInApiModel
+    public class LoginApiModel
     {
         public class Request
         {
@@ -18,12 +18,6 @@ namespace APIEasyPrint.APIModels
             [Required]
             public string PasswordHash { get; set; }
 
-            [Required]
-            public string PhoneNumber { get; set; }
-
-            [Required]
-            public string UserName { get; set; }
-            
         }
 
         public class Response
@@ -36,6 +30,8 @@ namespace APIEasyPrint.APIModels
             public string PhoneNumber { get; set; }
             public string UserName { get; set; }
             public string ErrorMessage { get; set; }
+
+
 
         }
     }

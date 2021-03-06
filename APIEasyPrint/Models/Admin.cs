@@ -10,8 +10,9 @@ namespace APIEasyPrint.Models
 {
     public class Admin : IdentityUser
     {
-        
-       
+
+        [Key]
+        public Guid Id { set; get; }
 
         public List<Suggestion> suggestions { set; get; }
         public List<ProblemReports> problemReports { set; get; }

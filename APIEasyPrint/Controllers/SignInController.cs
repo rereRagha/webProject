@@ -51,7 +51,7 @@ namespace APIEasyPrint.Controllers
 
             var appUser = new Customer()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Email = request.Email,
                 UserName = request.Email,
                 PasswordHash = request.PasswordHash,
@@ -63,7 +63,11 @@ namespace APIEasyPrint.Controllers
 
             response.Data = new SignInApiModel.Response()
             {
-                customer = appUser
+                PhoneNumber = appUser.PhoneNumber,
+                UserName=appUser.UserName,
+                Email=appUser.Email,
+                EmailConfiremd=appUser.EmailConfirmed,
+                Id=appUser.Id.ToString()
             };
 
             return Ok(response);

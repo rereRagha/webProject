@@ -25,6 +25,12 @@ namespace APIEasyPrint.Repositories
 
             return admin;
         }
+        public Customer FindCustomerByEmail(string customerEmail)
+        {
+            var customer = applicationDbContext.customers.FirstOrDefault(x => x.Email == customerEmail);
+           
+            return customer;
+        }
         public async Task< Admin> PostAdminDetailes(Admin NewAdminDetailes)
         {
 
