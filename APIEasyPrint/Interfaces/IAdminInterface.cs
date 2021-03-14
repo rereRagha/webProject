@@ -1,4 +1,5 @@
-﻿using APIEasyPrint.Models;
+﻿using APIEasyPrint.APIModels;
+using APIEasyPrint.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,9 @@ namespace APIEasyPrint.Interfaces
         public Admin GetAdminDetailes(Guid PrinterId);
         public Task<Admin> PostAdminDetailes(Admin NewAdminDetailes);
         public Task<Customer> PostCustomerDetailes(Customer NewCustomer);
+        public DeliveryDriver FindDriverByEmail(string driverEmail);
+        public DeliveryDriver GetDriverDetailes(Guid DriverId);
+        public Task UpdateCustomerDetailes(UpdateCustomerInfoApiModel.Request updatedCustomer);
+
     }
 }

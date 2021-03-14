@@ -12,44 +12,44 @@ namespace APIEasyPrint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourceMaterialController : ControllerBase
+    public class UpdateCustomerController : ControllerBase
     {
-
-        private readonly IPrintingShopsInterface _printingShops;
-        public CourceMaterialController(IPrintingShopsInterface _printingShops)
+        private readonly IAdminInterface _adminInterface;
+        public UpdateCustomerController(IAdminInterface _adminInterface)
         {
-            this._printingShops = _printingShops;
+            this._adminInterface = _adminInterface;
         }
 
-
-        // GET: api/<CourceMaterialController>
+        // GET: api/<UpdateCustomerController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<CourceMaterialController>/5
+        // GET api/<UpdateCustomerController>/5
         [HttpGet("{id}")]
-        public async Task<List<CourceMaterialApiModel.Response>> GetAsync(string id)
+        public string Get(int id)
         {
-            List<CourceMaterialApiModel.Response> coursere = await _printingShops.GetMaterialsByID(new Guid(id));
-            return coursere;
+            return "value";
         }
 
-        // POST api/<CourceMaterialController>
+        // POST api/<UpdateCustomerController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(UpdateCustomerInfoApiModel.Request updatedCustomer)
         {
+
+            _adminInterface.UpdateCustomerDetailes(updatedCustomer);
+               
         }
 
-        // PUT api/<CourceMaterialController>/5
+        // PUT api/<UpdateCustomerController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<CourceMaterialController>/5
+        // DELETE api/<UpdateCustomerController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

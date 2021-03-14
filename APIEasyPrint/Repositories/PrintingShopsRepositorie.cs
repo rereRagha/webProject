@@ -83,19 +83,22 @@ namespace APIEasyPrint.Repositories
 
         }
 
-        public async Task<List<CourceMaterial>> GetMaterialsByID(Guid printerId)
+        public async Task<List<CourceMaterialApiModel.Response>> GetMaterialsByID(Guid printerId)
         {
-            try
-            {
 
-                List<CourceMaterial> courceMaterial = applicationDbContext.courceMaterials.Where(x => x.printingShopId == printerId).ToList();
-                return courceMaterial;
-            }
-            catch (Exception e)
+            List<CourceMaterial> allCourceMaterials = applicationDbContext.courceMaterials.Where(x => x.printingShopId == printerId).ToList();
+            List<CourceMaterialApiModel.Response> result = allCourceMaterials.Select(q =>   new CourceMaterialApiModel.Response
             {
-                return null;
-            }
+                courceMaterialId = q.courceMaterialId,
+                courceMaterialTitle = q.courceMaterialTitle,
+                printingShopId = q.printingShopId,
+                courceMaterialDescreption = q.courceMaterialDescreption,
+                courceMaterialPrice = q.courceMaterialPrice,
+                SubjectId = q.SubjectId,
+                isAvailable = q.isAvailable
+            }).ToList();
 
+            return result;
 
         }
 

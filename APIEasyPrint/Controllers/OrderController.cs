@@ -12,44 +12,44 @@ namespace APIEasyPrint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourceMaterialController : ControllerBase
+    public class OrderController : ControllerBase
     {
+        private readonly IOrdersInterface _ordersInterface;
 
-        private readonly IPrintingShopsInterface _printingShops;
-        public CourceMaterialController(IPrintingShopsInterface _printingShops)
+        public OrderController(IOrdersInterface _ordersInterface)
         {
-            this._printingShops = _printingShops;
+            this._ordersInterface = _ordersInterface;
         }
-
-
-        // GET: api/<CourceMaterialController>
+        // GET: api/<OrderController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<CourceMaterialController>/5
+        // GET api/<OrderController>/5
         [HttpGet("{id}")]
-        public async Task<List<CourceMaterialApiModel.Response>> GetAsync(string id)
+        public List<AddItemApiModel.itemView> Get(string id)
         {
-            List<CourceMaterialApiModel.Response> coursere = await _printingShops.GetMaterialsByID(new Guid(id));
-            return coursere;
+            return _ordersInterface.GetOrderDetailes(new Guid(id));
         }
 
-        // POST api/<CourceMaterialController>
+        // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<AddItemApiModel.Response> PostAsync(AddItemApiModel.Request request)
         {
+            //do try catch 
+            
+            return  await _ordersInterface.PostOrderDetailes(request);
         }
 
-        // PUT api/<CourceMaterialController>/5
+        // PUT api/<OrderController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<CourceMaterialController>/5
+        // DELETE api/<OrderController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
