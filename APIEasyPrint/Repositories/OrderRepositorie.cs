@@ -114,9 +114,6 @@ namespace APIEasyPrint.Repositories
             }
         }
 
-
-
-
         public async Task<AddItemApiModel.ResponseByOneItem> PostItemsDetailes(AddItemApiModel.Request OrderDetailes)
         {
                 Item newItem = new Item
@@ -134,18 +131,6 @@ namespace APIEasyPrint.Repositories
                 await applicationDbContext.items.AddAsync(newItem);
                 await applicationDbContext.SaveChangesAsync();
 
-            //List<Item> AllOrderItems = applicationDbContext.items.Where(I => I.orderId == new Guid(OrderDetailes.orderId)).ToList();
-            //AddItemApiModel.Response rsulte = new AddItemApiModel.Response
-            //{
-            //    orderId = OrderDetailes.orderId.ToString(),
-            //    Items = AllOrderItems.Select(i => new AddItemApiModel.itemView
-            //    {
-            //        itemId = i.itemId.ToString(),
-            //        itemPrice = i.totalPriceOfTheItem,
-            //        printingShopID = i.printingShopId.ToString()
-            //    }
-            //).ToList(),
-            //};
 
             AddItemApiModel.ResponseByOneItem rsulte = new AddItemApiModel.ResponseByOneItem
             {
@@ -159,7 +144,115 @@ namespace APIEasyPrint.Repositories
                 return rsulte;
 
             }
+
+
+        public async Task<AddressApiModel.Response> PostNewAdress(AddressApiModel.Request address)
+        {
+            Address newAddress = new Address
+            {
+                invoiceId = new Guid(address.userId),
+                country = address.country,
+                city = address.city,
+                postcode = address.postcode,
+                adressLine = address.adressLine,
+                neighborhood = address.neighborhood,
+                street =address.street
+            };
+
+            await applicationDbContext.addresses.AddAsync(newAddress);
+            await applicationDbContext.SaveChangesAsync();
+
+
+            AddressApiModel.Response rsulte = new   AddressApiModel.Response
+            {
+                userId = newAddress.invoiceId.ToString(),
+                country = address.country,
+                city = address.city,
+                postcode = address.postcode,
+                adressLine = address.adressLine,
+                neighborhood = address.neighborhood,
+                street = address.street
+
+            };
+            return rsulte;
+
         }
+        public async Task<AddressApiModel.Response> UpdateAdress(AddressApiModel.Request address)
+        {
+            Address newAddress = new Address
+            {
+                invoiceId = new Guid(address.userId),
+                country = address.country,
+                city = address.city,
+                postcode = address.postcode,
+                adressLine = address.adressLine,
+                neighborhood = address.neighborhood,
+                street = address.street
+            };
+
+            applicationDbContext.addresses.Update(newAddress);
+            await applicationDbContext.SaveChangesAsync();
+
+            AddressApiModel.Response rsulte = new AddressApiModel.Response
+            {
+                userId = newAddress.invoiceId.ToString(),
+                country = address.country,
+                city = address.city,
+                postcode = address.postcode,
+                adressLine = address.adressLine,
+                neighborhood = address.neighborhood,
+                street = address.street
+
+            };
+            return rsulte;
+
+        }
+        public AddressApiModel.Response GetAddress(Guid UserId)
+        {
+
+            //get the oder info 
+            Address address = applicationDbContext.addresses.Find(UserId);
+
+
+            AddressApiModel.Response rsulte = new AddressApiModel.Response
+            {
+                userId = address.invoiceId.ToString(),
+                country = address.country,
+                city = address.city,
+                postcode = address.postcode,
+                adressLine = address.adressLine,
+                neighborhood = address.neighborhood,
+                street = address.street
+
+            };
+            return rsulte;
+        }
+
+        public List<PrivatePromotionCodeApiModel.Response> GetPromotionCode(Guid UserId)
+        {
+
+            //get the oder info 
+            List<PrivatePromotionCode> AllCodes = applicationDbContext.privatePromotionCodes.Where(I => I.CustomerId == UserId).ToList();
+
+            List<PrivatePromotionCodeApiModel.Response> resulte = AllCodes.Select(i => new PrivatePromotionCodeApiModel.Response
+            {
+                privatePromotionCodeId = i.privatePromotionCodeId.ToString(),
+                privatePromotionCodeString = i.privatePromotionCodeString,
+                startDate = i.startDate,
+                expireDate = i.expireDate,
+                isExpired = i.isExpired,
+                isUsed = i.isUsed,
+                CustomerId = i.CustomerId.ToString(),
+                printingShopId = i.printingShopId.ToString()
+            }
+                ).ToList();
+            return resulte;
+        }
+
+
+
+
+    }
 
 
 
