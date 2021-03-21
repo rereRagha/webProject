@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace APIEasyPrint.Controllers
 {
+    //this is the customer login cpntroller
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase

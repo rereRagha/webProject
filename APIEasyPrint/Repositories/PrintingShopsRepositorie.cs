@@ -55,12 +55,9 @@ namespace APIEasyPrint.Repositories
         }
         public async Task<PrintingShop> PostPrintingShopDetailes(PrintingShop NewPrintirDetailes)
         {
-            
                 await applicationDbContext.printingShops.AddAsync(NewPrintirDetailes);
                 await applicationDbContext.SaveChangesAsync();
                 return NewPrintirDetailes;
-
-
         }
         public async Task<List<PrintingShopApiMode.Response>> GtAllPrintingShops()
         {
@@ -102,5 +99,19 @@ namespace APIEasyPrint.Repositories
 
         }
 
+        public ApplicationUser FindApplicationUserByEmail(string userEmail)
+        {
+            var owner = applicationDbContext.applicationUsers.FirstOrDefault(x => x.Email == userEmail);
+
+            return owner;
+        }
+        public async Task<ApplicationUser> PostOwnerDetailes(ApplicationUser newOwner)
+        {
+
+            await applicationDbContext.applicationUsers.AddAsync(newOwner);
+            await applicationDbContext.SaveChangesAsync();
+
+            return newOwner;
+        }
     }
 }

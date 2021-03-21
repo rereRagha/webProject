@@ -15,7 +15,7 @@ namespace APIEasyPrint.Interfaces
         public  Task<AddressApiModel.Response> PostNewAdress(AddressApiModel.Request address);
         public  Task<AddressApiModel.Response> UpdateAdress(AddressApiModel.Request address);
         public AddressApiModel.Response GetAddress(Guid UserId);
-
+        public Task DeleteItem(Guid itemId);
         public List<PrivatePromotionCodeApiModel.Response> GetPromotionCode(Guid UserId);
 
     }

@@ -145,7 +145,17 @@ namespace APIEasyPrint.Repositories
 
             }
 
+        public async Task DeleteItem(Guid itemId)
+        {
+            Item newItem = new Item
+            {
+                itemId = itemId
+            };
 
+             applicationDbContext.items.Remove(newItem);
+            await applicationDbContext.SaveChangesAsync();
+
+        }
         public async Task<AddressApiModel.Response> PostNewAdress(AddressApiModel.Request address)
         {
             Address newAddress = new Address
@@ -252,9 +262,7 @@ namespace APIEasyPrint.Repositories
 
 
 
+
     }
-
-
-
 
   }

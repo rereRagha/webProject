@@ -61,8 +61,9 @@ namespace APIEasyPrint.Controllers
 
         // DELETE api/<ItemsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task DeleteAsync(string id)
         {
+            await  _ordersInterface.DeleteItem(new Guid(id));
         }
     }
 }

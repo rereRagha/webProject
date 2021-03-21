@@ -23,6 +23,7 @@ namespace APIEasyPrint.Models
         [Display(Name = "وحدة البيع")]
         [DataType(DataType.Text)]
         public SellUnit selectedSellUnit { get; set; }
+        // public Guid selectedSellUnitsellUnitId { get; set; }
 
         [Display(Name = " وصف الخدمة")]
         [DataType(DataType.MultilineText)]
