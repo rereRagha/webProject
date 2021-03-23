@@ -17,18 +17,16 @@ namespace APIEasyPrint.Models
         [Required(ErrorMessage = "هذا الحقل مطلوب ")]
         [StringLength(100)]
         public string serviceTitle { get; set; }
+        public double Price { get; set; }
 
-        public List<SellUnit> allSellUnits { set; get; }
 
-        [Display(Name = "وحدة البيع")]
-        [DataType(DataType.Text)]
-        public SellUnit selectedSellUnit { get; set; }
-        // public Guid selectedSellUnitsellUnitId { get; set; }
+        public Guid SellUnitsellUnitId { get; set; }
 
         [Display(Name = " وصف الخدمة")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessage = "هذا الحقل مطلوب ")]
         [StringLength(300)]
         public string serviceDescreption { get; set; }
+        public Guid printingShopId { get; set; }
+
     }
 }

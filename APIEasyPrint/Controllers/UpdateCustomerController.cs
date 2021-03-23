@@ -1,5 +1,6 @@
 ﻿using APIEasyPrint.APIModels;
 using APIEasyPrint.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace APIEasyPrint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
+
     public class UpdateCustomerController : ControllerBase
     {
         private readonly IAdminInterface _adminInterface;

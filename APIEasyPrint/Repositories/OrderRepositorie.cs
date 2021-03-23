@@ -160,7 +160,7 @@ namespace APIEasyPrint.Repositories
         {
             Address newAddress = new Address
             {
-                invoiceId = new Guid(address.userId),
+                UserId = new Guid(address.userId),
                 country = address.country,
                 city = address.city,
                 postcode = address.postcode,
@@ -175,7 +175,7 @@ namespace APIEasyPrint.Repositories
 
             AddressApiModel.Response rsulte = new   AddressApiModel.Response
             {
-                userId = newAddress.invoiceId.ToString(),
+                userId = newAddress.UserId.ToString(),
                 country = address.country,
                 city = address.city,
                 postcode = address.postcode,
@@ -191,7 +191,7 @@ namespace APIEasyPrint.Repositories
         {
             Address newAddress = new Address
             {
-                invoiceId = new Guid(address.userId),
+                UserId = new Guid(address.userId),
                 country = address.country,
                 city = address.city,
                 postcode = address.postcode,
@@ -205,7 +205,7 @@ namespace APIEasyPrint.Repositories
 
             AddressApiModel.Response rsulte = new AddressApiModel.Response
             {
-                userId = newAddress.invoiceId.ToString(),
+                userId = newAddress.UserId.ToString(),
                 country = address.country,
                 city = address.city,
                 postcode = address.postcode,
@@ -226,7 +226,7 @@ namespace APIEasyPrint.Repositories
 
             AddressApiModel.Response rsulte = new AddressApiModel.Response
             {
-                userId = address.invoiceId.ToString(),
+                userId = address.UserId.ToString(),
                 country = address.country,
                 city = address.city,
                 postcode = address.postcode,

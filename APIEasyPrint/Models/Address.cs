@@ -9,7 +9,7 @@ namespace APIEasyPrint.Models
     public class Address
     {
         [Key]
-        public Guid invoiceId { set; get; }
+        public Guid UserId { set; get; }
 
         [Display(Name = "الدولة")]
         [DataType(DataType.Text)]
@@ -49,6 +49,18 @@ namespace APIEasyPrint.Models
         [DataType(DataType.Text)]
         [StringLength(5)]
         public string postcode { set; get; }
+
+
+
+        //gps stuff
+
+
+        public double latitude { set; get; }
+        public double longitude { set; get; }
+        public double latitudeDelta { set; get; }
+        public double longitudeDelta { set; get; }
+
+
 
 
 

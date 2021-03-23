@@ -5,11 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace APIEasyPrint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
+
     public class AdminController : ControllerBase
     {
         private readonly IAdminInterface _adminInterface;

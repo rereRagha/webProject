@@ -18,6 +18,10 @@ namespace APIEasyPrint.Models
         public double total { set; get; }
         public int numberOfItems { set; get; }
 
+        public DateTime orderCreationDate { set; get; }
+        public DateTime orderEndDate { set; get; }
+
+
         public Status orderStatus { set; get; }
         public Status deliveryStatus { set; get; }
 

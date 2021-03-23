@@ -13,7 +13,6 @@ namespace APIEasyPrint.Models
         public bool isCourceMaterial { set; get; }
         public bool isPrintingOrder { set; get; }
 
-        public List<ServiceDetails> services { get; set; }
         public double totalPriceOfTheItem { set; get; }
 
 

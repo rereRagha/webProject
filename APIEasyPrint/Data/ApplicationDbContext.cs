@@ -37,6 +37,8 @@ namespace APIEasyPrint.Data
         public DbSet<Status> statuses { get; set; }
         public DbSet<Subject> subjects { get; set; }
         public DbSet<Suggestion> suggestions { get; set; }
+        public DbSet<Images> images { get; set; }
+
 
 
 

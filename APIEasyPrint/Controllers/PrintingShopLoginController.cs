@@ -1,6 +1,7 @@
 ﻿using APIEasyPrint.APIModels;
 using APIEasyPrint.Interfaces;
 using APIEasyPrint.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace APIEasyPrint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
+
     public class PrintingShopLoginController : ControllerBase
     {
 

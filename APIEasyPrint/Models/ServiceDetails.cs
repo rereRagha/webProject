@@ -11,8 +11,11 @@ namespace APIEasyPrint.Models
     {
         [Key]
         public Guid Id { set; get; }
-        public List<Service> services { get; set; }
-        public Service selectedService { get; set; }
+        public Guid selectedServiceId { get; set; }
+
+        public Guid itemId { set; get; }
+
+
 
 
         [Display(Name = "سعر الخدمة")]
@@ -20,10 +23,6 @@ namespace APIEasyPrint.Models
         [Required(ErrorMessage = "هذا الحقل مطلوب ")]
         public double ServicePrice { get; set; }
 
-
-
-        [ForeignKey("PrintigShopFK")]
         public Guid printingShopId { get; set; }
-        public PrintingShop printingShop { get; set; }
     }
 }

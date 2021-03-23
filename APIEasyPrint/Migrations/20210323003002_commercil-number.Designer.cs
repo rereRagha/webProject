@@ -4,14 +4,16 @@ using APIEasyPrint.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EasyPrintWebSite.Migrations.StucturDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class StucturDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210323003002_commercil-number")]
+    partial class commercilnumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -580,9 +582,6 @@ namespace EasyPrintWebSite.Migrations.StucturDb
 
                     b.Property<string>("commrecialNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isAccepted")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("isCourseMaterial")
                         .HasColumnType("bit");

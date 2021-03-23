@@ -17,8 +17,11 @@ using System.Threading.Tasks;
 
 namespace APIEasyPrint
 {
+
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,10 +33,21 @@ namespace APIEasyPrint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
+            services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(
-                 Configuration.GetConnectionString("CLOUD")));
-
+                 Configuration.GetConnectionString("CLOUD2")));
+   
             services.AddScoped<IAdminInterface, UsesRepositorie>();
             services.AddScoped<IPrintingShopsInterface, PrintingShopsRepositorie>();
             services.AddScoped<IOrdersInterface, OrderRepositorie>();
@@ -53,6 +67,8 @@ namespace APIEasyPrint
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors(MyAllowSpecificOrigins);
+
 
             app.UseEndpoints(endpoints =>
             {

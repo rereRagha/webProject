@@ -4,14 +4,16 @@ using APIEasyPrint.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EasyPrintWebSite.Migrations.StucturDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class StucturDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210322000717_updating")]
+    partial class updating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,18 +40,6 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<double>("latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("latitudeDelta")
-                        .HasColumnType("float");
-
-                    b.Property<double>("longitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("longitudeDelta")
-                        .HasColumnType("float");
 
                     b.Property<string>("neighborhood")
                         .IsRequired()
@@ -451,26 +441,6 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.ToTable("feedbacks");
                 });
 
-            modelBuilder.Entity("APIEasyPrint.Models.Images", b =>
-                {
-                    b.Property<Guid>("ImgId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("ImgeBytes")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ItemId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("siz")
-                        .HasColumnType("float");
-
-                    b.HasKey("ImgId");
-
-                    b.ToTable("images");
-                });
-
             modelBuilder.Entity("APIEasyPrint.Models.Item", b =>
                 {
                     b.Property<Guid>("itemId")
@@ -532,12 +502,6 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.Property<int>("numberOfItems")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("orderCreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("orderEndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid?>("orderStatusStatusId")
                         .HasColumnType("uniqueidentifier");
 
@@ -563,26 +527,11 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PrintingShopEmail")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid?>("addressUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("applicationUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("city")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("commrecialName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("commrecialNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isAccepted")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("isCourseMaterial")
                         .HasColumnType("bit");
@@ -746,6 +695,9 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.Property<Guid>("SellUnitsellUnitId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ServiceDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("printingShopId")
                         .HasColumnType("uniqueidentifier");
 
@@ -760,6 +712,8 @@ namespace EasyPrintWebSite.Migrations.StucturDb
 
                     b.HasKey("serviceId");
 
+                    b.HasIndex("ServiceDetailsId");
+
                     b.ToTable("services");
                 });
 
@@ -772,18 +726,22 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.Property<double>("ServicePrice")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("itemId")
+                    b.Property<Guid?>("itemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("printingShopId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("selectedServiceId")
+                    b.Property<Guid?>("selectedServiceserviceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("itemId");
+
                     b.HasIndex("printingShopId");
+
+                    b.HasIndex("selectedServiceserviceId");
 
                     b.ToTable("serviceDetails");
                 });
@@ -1016,13 +974,28 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("APIEasyPrint.Models.Service", b =>
+                {
+                    b.HasOne("APIEasyPrint.Models.ServiceDetails", null)
+                        .WithMany("services")
+                        .HasForeignKey("ServiceDetailsId");
+                });
+
             modelBuilder.Entity("APIEasyPrint.Models.ServiceDetails", b =>
                 {
-                    b.HasOne("APIEasyPrint.Models.PrintingShop", null)
+                    b.HasOne("APIEasyPrint.Models.Item", null)
+                        .WithMany("services")
+                        .HasForeignKey("itemId");
+
+                    b.HasOne("APIEasyPrint.Models.PrintingShop", "printingShop")
                         .WithMany("serviceDetails")
                         .HasForeignKey("printingShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("APIEasyPrint.Models.Service", "selectedService")
+                        .WithMany()
+                        .HasForeignKey("selectedServiceserviceId");
                 });
 
             modelBuilder.Entity("APIEasyPrint.Models.Suggestion", b =>

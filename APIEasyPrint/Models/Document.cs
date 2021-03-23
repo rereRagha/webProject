@@ -19,6 +19,11 @@ namespace APIEasyPrint.Models
         [DataType(DataType.Upload)]
         public string docLocation { set; get; }
 
+        public  byte[] fileBytes { set; get; }
+        public double size { set; get; }
+        public string fileType { set; get; }
+
+
 
         [ForeignKey("CustomerFK")]
         public Guid CustomerId { get; set; }

@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 using System.Threading.Tasks;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace APIEasyPrint.Controllers
@@ -14,6 +14,8 @@ namespace APIEasyPrint.Controllers
     //this is the customer login cpntroller
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
+
     public class LoginController : ControllerBase
     {
 

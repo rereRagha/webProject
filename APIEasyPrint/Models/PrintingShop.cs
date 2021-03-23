@@ -27,11 +27,16 @@ namespace APIEasyPrint.Models
         [Display(Name = "خدمة طلبات الطباعة")]
         [Required(ErrorMessage = "هذا الحقل مطلوب ")]
         public bool isService { get; set; }
+        public bool isAccepted { get; set; }
 
 
+        public string commrecialName { set; get; }
+        public string commrecialNumber { set; get; }
 
+        public string city { set; get; }
+        public string PrintingShopEmail { set; get; }
 
-
+        
         [Display(Name = "خدمات التوصيل و أسعارها")]
         public DeliverOptions deliverOptions { get; set; }
 
