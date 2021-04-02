@@ -17,6 +17,7 @@ namespace APIEasyPrint.Interfaces
         public Task<List<CourceMaterialApiModel.Response>> GetMaterialsByID(Guid printerId);
         public ApplicationUser FindApplicationUserByEmail(string userEmail);
         public Task<ApplicationUser> PostOwnerDetailes(ApplicationUser newOwner);
+        public PrintingShop GetPrintingShopDetailesByOwnerId(string OwnerId);
 
     }
 }

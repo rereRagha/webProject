@@ -22,8 +22,10 @@ namespace APIEasyPrint.Models
         public DateTime orderEndDate { set; get; }
 
 
-        public Status orderStatus { set; get; }
-        public Status deliveryStatus { set; get; }
+        public Guid orderStatusStatusId { set; get; }
+
+        public Guid deliveryStatusStatusId { set; get; }
+
 
 
         [ForeignKey("CustomerFK")]

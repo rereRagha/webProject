@@ -46,7 +46,7 @@ namespace APIEasyPrint
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(
-                 Configuration.GetConnectionString("CLOUD2")));
+                 Configuration.GetConnectionString("DefaultConnection")));
    
             services.AddScoped<IAdminInterface, UsesRepositorie>();
             services.AddScoped<IPrintingShopsInterface, PrintingShopsRepositorie>();

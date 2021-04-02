@@ -17,6 +17,30 @@ namespace APIEasyPrint.Repositories
             this.applicationDbContext = applicationDbContext;
 
         }
+        public List<OrderApiModel.Response> GetOrdersByPrintingShopID(Guid printerId)
+        {
+
+            List<Item> items = applicationDbContext.items.Where(I => I.printingShopId == printerId).ToList();
+          
+            List<OrderApiModel.Response> responses = items.Select(i => new OrderApiModel.Response
+            {
+                orderId = i.orderId.ToString(),
+                itemId = i.itemId.ToString(),
+                orderStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).StatusNo,
+                orderStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).statusName,
+                deliveryStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).statusName,
+                deliveryStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).StatusNo,
+                orderDate = applicationDbContext.orders.Find(i.orderId).orderCreationDate,
+                customerId = applicationDbContext.orders.Find(i.orderId).CustomerId.ToString(),
+                customerName = applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).UserName,
+                total = applicationDbContext.orders.Find(i.orderId).total,
+            }
+                ).ToList();
+
+
+            return responses;
+        }
+
 
         public List<AddItemApiModel.itemView> GetOrderDetailes(Guid orderId)
         {

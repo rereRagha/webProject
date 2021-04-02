@@ -34,6 +34,13 @@ namespace APIEasyPrint.Repositories
 
                 return rsulte;
         }
+        public PrintingShop GetPrintingShopDetailesByOwnerId(string OwnerId)
+        {
+
+            var printingShop = applicationDbContext.printingShops.FirstOrDefault(x => x.ownerId == "1783e57a-2b1c-46c1-bb20-4f4208ea6122");
+           
+            return printingShop;
+        }
 
         public CourceMaterialApiModel.Response GetCourceMaterialDetailes(Guid CourceId)
         {

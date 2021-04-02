@@ -4,14 +4,16 @@ using APIEasyPrint.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EasyPrintWebSite.Migrations.StucturDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class StucturDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210324235849_intNo")]
+    partial class intNo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -526,7 +528,7 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.Property<Guid?>("DeliveryDriverId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("deliveryStatusStatusId")
+                    b.Property<Guid?>("deliveryStatusStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("numberOfItems")
@@ -538,7 +540,7 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.Property<DateTime>("orderEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("orderStatusStatusId")
+                    b.Property<Guid?>("orderStatusStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("total")
@@ -549,6 +551,10 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("DeliveryDriverId");
+
+                    b.HasIndex("deliveryStatusStatusId");
+
+                    b.HasIndex("orderStatusStatusId");
 
                     b.ToTable("orders");
                 });
@@ -951,6 +957,14 @@ namespace EasyPrintWebSite.Migrations.StucturDb
                     b.HasOne("APIEasyPrint.Models.DeliveryDriver", null)
                         .WithMany("orders")
                         .HasForeignKey("DeliveryDriverId");
+
+                    b.HasOne("APIEasyPrint.Models.Status", "deliveryStatus")
+                        .WithMany()
+                        .HasForeignKey("deliveryStatusStatusId");
+
+                    b.HasOne("APIEasyPrint.Models.Status", "orderStatus")
+                        .WithMany()
+                        .HasForeignKey("orderStatusStatusId");
                 });
 
             modelBuilder.Entity("APIEasyPrint.Models.PrintingShop", b =>

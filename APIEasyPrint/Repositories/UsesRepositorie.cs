@@ -4,6 +4,7 @@ using APIEasyPrint.Interfaces;
 using APIEasyPrint.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -85,7 +86,33 @@ namespace APIEasyPrint.Repositories
 
         }
 
+        public async Task<string> UploadFile (UploadFileApiModel.Request FileInfo)
+        {
+            // 1) Get file binary
+            byte[] fileBytes;
+            using (var fs = new FileStream(
+                FileInfo.localFile, FileMode.Open, FileAccess.Read))
+            {
+                fileBytes = new byte[fs.Length];
+                fs.Read(
+                    fileBytes, 0, Convert.ToInt32(fs.Length));
+            }
 
+            // 2) Create a Files object
+            var file = new Document()
+            {
+                docId= new Guid(),
+                fileBytes = fileBytes,
+                docTitle = FileInfo.fileName,
+                size = fileBytes.Length
+            };
+
+            // 3) Add and save it in database
+            await applicationDbContext.documents.AddAsync(file);
+           await applicationDbContext.SaveChangesAsync();
+           
+            return "File has been Upladed ";
+        }
 
     }
 }

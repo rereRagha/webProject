@@ -30,7 +30,8 @@ namespace APIEasyPrint.APIModels
             public string PhoneNumber { get; set; }
             public string FullName { get; set; }
             public string ErrorMessage { get; set; }
-
+            public string PrinterName { set; get; }
+            public string PrinterId { set; get; }
 
 
         }

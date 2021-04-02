@@ -7,6 +7,8 @@ namespace APIEasyPrint.Models
     {
         [Key]
         public Guid StatusId { set; get; }
+        public int StatusNo { set; get; }
+
         public string statusName { set; get; }
     }
 }

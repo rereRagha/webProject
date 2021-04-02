@@ -4,14 +4,16 @@ using APIEasyPrint.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EasyPrintWebSite.Migrations.StucturDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class StucturDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210325023031_updating staus")]
+    partial class updatingstaus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -42,6 +42,8 @@
     <Compile Remove="Migrations\20210227171921_teste.Designer.cs" />
     <Compile Remove="Migrations\20210227172431_tese.cs" />
     <Compile Remove="Migrations\20210227172431_tese.Designer.cs" />
+    <Compile Remove="Migrations\20210324235644_intId.cs" />
+    <Compile Remove="Migrations\20210324235644_intId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +55,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 

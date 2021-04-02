@@ -17,6 +17,8 @@ namespace APIEasyPrint.Interfaces
         public AddressApiModel.Response GetAddress(Guid UserId);
         public Task DeleteItem(Guid itemId);
         public List<PrivatePromotionCodeApiModel.Response> GetPromotionCode(Guid UserId);
+        public List<OrderApiModel.Response> GetOrdersByPrintingShopID(Guid orderId);
+
 
     }
 }
