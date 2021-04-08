@@ -10,6 +10,7 @@ namespace APIEasyPrint.APIModels
     {
         public class Request
         {
+            //not needed, its a get method 
            public string printerId { set; get; }
 
 
@@ -18,7 +19,7 @@ namespace APIEasyPrint.APIModels
 
         public class Response
         {
-            public string orderId { set; get; }
+            public string Id { set; get; }
             public string itemId { set; get; }
             public int orderStatusId { set; get; }
             public string orderStatus { set; get; }

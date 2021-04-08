@@ -18,6 +18,22 @@ namespace APIEasyPrint.Repositories
             this.applicationDbContext = applicationDbContext;
 
         }
+        public async Task<bool> PostNewMaterial(CourceMaterialApiModel.Request request)
+        {
+            CourceMaterial result = new CourceMaterial
+            {
+                courceMaterialId = new Guid(),
+                courceMaterialTitle = request.courceMaterialTitle,
+                printingShopId = new Guid(request.printingShopId),
+                courceMaterialDescreption = request.courceMaterialDescreption,
+                courceMaterialPrice = request.courceMaterialPrice,
+                SubjectId = new Guid(request.SubjectId),
+                isAvailable = request.isAvailable
+            };
+            await applicationDbContext.courceMaterials.AddAsync(result);
+            await applicationDbContext.SaveChangesAsync();
+            return true;
+        }
         public PrintingShopApiMode.Response GetPrintingShopDetailes(Guid PrinterId)
         {
            
@@ -29,7 +45,7 @@ namespace APIEasyPrint.Repositories
                     isService= printingShop.isService,
                     isCourseMaterial= printingShop.isCourseMaterial,
                     prentingShopId = printingShop.prentingShopId.ToString()
-
+                    
                 };
 
                 return rsulte;
@@ -37,7 +53,7 @@ namespace APIEasyPrint.Repositories
         public PrintingShop GetPrintingShopDetailesByOwnerId(string OwnerId)
         {
 
-            var printingShop = applicationDbContext.printingShops.FirstOrDefault(x => x.ownerId == "1783e57a-2b1c-46c1-bb20-4f4208ea6122");
+            var printingShop =  applicationDbContext.printingShops.FirstOrDefault(x => x.ownerId == OwnerId);
            
             return printingShop;
         }

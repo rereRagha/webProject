@@ -13,8 +13,8 @@ namespace APIEasyPrint.APIModels
             public string courceMaterialDescreption { get; set; }
             public double courceMaterialPrice { get; set; }
             public bool isAvailable { get; set; }
-            public Guid SubjectId { get; set; }
-            public Guid printingShopId { get; set; }
+            public string SubjectId { get; set; }
+            public string printingShopId { get; set; }
 
         }
 

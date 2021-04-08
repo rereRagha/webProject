@@ -42,8 +42,9 @@ namespace APIEasyPrint.Controllers
 
         // POST api/<CourceMaterialController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<bool> Post(CourceMaterialApiModel.Request request)
         {
+            return await _printingShops.PostNewMaterial(request);
         }
 
         // PUT api/<CourceMaterialController>/5

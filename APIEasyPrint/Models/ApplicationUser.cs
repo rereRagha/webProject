@@ -8,5 +8,7 @@ namespace APIEasyPrint.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public Guid prentingShopId { get; set; }
+        public string prenterName { get; set; }
     }
 }

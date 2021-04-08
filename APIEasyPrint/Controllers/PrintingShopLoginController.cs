@@ -70,10 +70,9 @@ namespace APIEasyPrint.Controllers
                 response.Data.PhoneNumber = User.PhoneNumber;
                 response.Data.Id = User.Id.ToString();
                 response.Data.FullName = User.UserName;
-                PrintingShop printingShop = new PrintingShop();
-                printingShop = _printerInterface.GetPrintingShopDetailesByOwnerId(User.Id.ToString());
-                response.Data.PrinterId = printingShop.prentingShopId.ToString();
-                response.Data.PrinterName = printingShop.prenterName;
+                
+                response.Data.PrinterId = User.prentingShopId.ToString();
+                response.Data.PrinterName = User.prenterName;
                 return Ok(response);
             }
             else

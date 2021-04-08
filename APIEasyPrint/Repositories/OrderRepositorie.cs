@@ -24,7 +24,7 @@ namespace APIEasyPrint.Repositories
           
             List<OrderApiModel.Response> responses = items.Select(i => new OrderApiModel.Response
             {
-                orderId = i.orderId.ToString(),
+                Id = i.orderId.ToString(),
                 itemId = i.itemId.ToString(),
                 orderStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).StatusNo,
                 orderStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).statusName,

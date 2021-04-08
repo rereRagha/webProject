@@ -15,6 +15,9 @@ namespace APIEasyPrint.Interfaces
         public Task<List<PrintingShopApiMode.Response>>GtAllPrintingShops();
         public CourceMaterialApiModel.Response GetCourceMaterialDetailes(Guid CourceId);
         public Task<List<CourceMaterialApiModel.Response>> GetMaterialsByID(Guid printerId);
+        public Task<bool> PostNewMaterial(CourceMaterialApiModel.Request request);
+       // public Task<> PostServiceDetailes(Guid printerId);
+
         public ApplicationUser FindApplicationUserByEmail(string userEmail);
         public Task<ApplicationUser> PostOwnerDetailes(ApplicationUser newOwner);
         public PrintingShop GetPrintingShopDetailesByOwnerId(string OwnerId);

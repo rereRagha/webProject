@@ -36,9 +36,6 @@ namespace APIEasyPrint.Models
         [Required(ErrorMessage = "هذا الحقل مطلوب ")]
         public bool isAvailable { get; set; }
 
-
-
-
         [ForeignKey("SubjectFK")]
         public Guid SubjectId { get; set; }
         public Subject courceMaterialSelectedSubject { get; set; }
