@@ -22,6 +22,7 @@ namespace APIEasyPrint.APIModels
             public string Id { set; get; }
             public string itemId { set; get; }
             public int orderStatusId { set; get; }
+            public List<ItemInfo> items { set; get; }
             public string orderStatus { set; get; }
             public int deliveryStatusId { set; get; }
 
@@ -30,6 +31,20 @@ namespace APIEasyPrint.APIModels
             public string customerId { set; get; }
             public string customerName { set; get; }
             public double total { set; get; }
+
+        }
+        public class ItemInfo
+        {
+            public string ItemID { set; get; }
+            public double ItemPrice { set; get; }
+            public string docID { set; get; }
+            public string CourseID { set; get; }
+
+            public string title { set; get; }
+            public string Description { set; get; }
+
+            public bool isService { set; get;  }
+            public bool isProduct { set; get; }
 
         }
     }

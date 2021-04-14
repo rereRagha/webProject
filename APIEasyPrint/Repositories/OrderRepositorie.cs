@@ -2,7 +2,9 @@
 using APIEasyPrint.Data;
 using APIEasyPrint.Interfaces;
 using APIEasyPrint.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,15 +19,112 @@ namespace APIEasyPrint.Repositories
             this.applicationDbContext = applicationDbContext;
 
         }
+        public async Task<string> UpdateCustomerOrderStatusAsync(Guid orderId, double Total)
+        {
+            Order _ordr = applicationDbContext.orders.Find(orderId);
+            _ordr.orderStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E39711E9077");
+            _ordr.deliveryStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E30011E9077");
+            _ordr.total = Total;
+
+            applicationDbContext.orders.Update(_ordr);
+            await applicationDbContext.SaveChangesAsync();
+            return "success";
+        }
+        public async Task<string> UpdatePrinterOrderStatus(Guid orderId)
+        {
+            Order _ordr = applicationDbContext.orders.Find(orderId);
+            _ordr.orderStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E39788E9077");
+            _ordr.deliveryStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E39788E9077");
+
+            applicationDbContext.orders.Update(_ordr);
+            await applicationDbContext.SaveChangesAsync();
+            return "success";
+        }
+        public async Task<string> UpdateDriverOrderStatus(Guid orderId)
+        {
+            Order _ordr = applicationDbContext.orders.Find(orderId);
+            _ordr.orderStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E39711E9077");
+            _ordr.deliveryStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E39711E9011");
+
+            applicationDbContext.orders.Update(_ordr);
+            await applicationDbContext.SaveChangesAsync();
+            return "success";
+        }
         public List<OrderApiModel.Response> GetOrdersByPrintingShopID(Guid printerId)
         {
 
             List<Item> items = applicationDbContext.items.Where(I => I.printingShopId == printerId).ToList();
-          
-            List<OrderApiModel.Response> responses = items.Select(i => new OrderApiModel.Response
+            List<Item> itemsTemp  = new List<Item>();
+            foreach (Item u1 in items)
+            {
+                bool duplicatefound = false;
+                foreach (Item u2 in itemsTemp)
+                    if (u1.orderId == u2.orderId)
+                        duplicatefound = true;
+
+                if (!duplicatefound)
+                    itemsTemp.Add(u1);
+            }
+            List<OrderApiModel.Response> responses = itemsTemp.Select(i => new OrderApiModel.Response
             {
                 Id = i.orderId.ToString(),
                 itemId = i.itemId.ToString(),
+                items = items.Where(I => I.orderId == i.orderId).Select(X => new OrderApiModel.ItemInfo
+                {
+                    ItemID=X.itemId.ToString(),
+                    docID= X.docId.ToString(),
+                    title = applicationDbContext.courceMaterials.Find(X.courceMaterialId).courceMaterialTitle,
+                    CourseID = X.courceMaterialId.ToString(),
+                    isProduct= X.isCourceMaterial,
+                    isService=X.isPrintingOrder,
+                    ItemPrice = X.totalPriceOfTheItem,
+                    Description= X.ThePrintingDetailes
+                } ).ToList(),
+
+                orderStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).StatusNo,
+                orderStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).statusName,
+                deliveryStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).statusName,
+                deliveryStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).StatusNo,
+                orderDate = applicationDbContext.orders.Find(i.orderId).orderCreationDate,
+                customerId = applicationDbContext.orders.Find(i.orderId).CustomerId.ToString(),
+                customerName = applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).UserName,
+                total = applicationDbContext.orders.Find(i.orderId).total,
+            }
+              
+                ).ToList();
+
+            return responses;
+        }
+        //public List<OrderApiModel.Response> GetOrdersByPrintingShopID(Guid printerId)
+        //{
+
+        //    List<Item> items = applicationDbContext.items.Where(I => I.printingShopId == printerId).ToList();
+          
+        //    List<OrderApiModel.Response> responses = items.Select(i => new OrderApiModel.Response
+        //    {
+        //        Id = i.orderId.ToString(),
+        //        itemId = i.itemId.ToString(),
+        //        orderStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).StatusNo,
+        //        orderStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).statusName,
+        //        deliveryStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).statusName,
+        //        deliveryStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).StatusNo,
+        //        orderDate = applicationDbContext.orders.Find(i.orderId).orderCreationDate,
+        //        customerId = applicationDbContext.orders.Find(i.orderId).CustomerId.ToString(),
+        //        customerName = applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).UserName,
+        //        total = applicationDbContext.orders.Find(i.orderId).total,
+        //    }
+        //        ).ToList();
+
+
+        //    return responses;
+        //}
+        public List<OrderApiModel.Response> GetOrdersByCustomerID(Guid CustomerId)
+        {
+            List<Order> Orders = applicationDbContext.orders.Where(I => I.CustomerId == CustomerId).ToList();
+
+            List<OrderApiModel.Response> responses = Orders.Select(i => new OrderApiModel.Response
+            {
+                Id = i.orderId.ToString(),
                 orderStatusId = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).StatusNo,
                 orderStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).orderStatusStatusId).statusName,
                 deliveryStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).statusName,
@@ -36,11 +135,8 @@ namespace APIEasyPrint.Repositories
                 total = applicationDbContext.orders.Find(i.orderId).total,
             }
                 ).ToList();
-
-
             return responses;
         }
-
 
         public List<AddItemApiModel.itemView> GetOrderDetailes(Guid orderId)
         {
@@ -57,7 +153,10 @@ namespace APIEasyPrint.Repositories
                 itemPrice = i.totalPriceOfTheItem,
                 printingShopID = i.printingShopId.ToString(),
                 courseID = i.courceMaterialId.ToString(),
-                courseName = applicationDbContext.courceMaterials.Find(i.courceMaterialId).courceMaterialTitle
+                courseName = applicationDbContext.courceMaterials.Find(i.courceMaterialId).courceMaterialTitle,
+                isCourceMaterial = i.isCourceMaterial,
+                isPrintingOrder = i.isPrintingOrder,
+                servicName = "طلب طباعة "
             }
                 ).ToList();
 
@@ -88,7 +187,10 @@ namespace APIEasyPrint.Repositories
                     orderId = new Guid(),
                     total = OrderDetailes.totalPriceOfTheItem,
                     CustomerId = new Guid(OrderDetailes.customerId),
-                    numberOfItems = OrderDetailes.numberOfItems
+                    numberOfItems = OrderDetailes.numberOfItems,
+                    deliveryStatusStatusId=new Guid("33E0B0A3-4652-4AB7-9553-1E39767E9077"),
+                    orderStatusStatusId = new Guid("33E0B0A3-4652-4AB7-9553-1E39767E9077"),
+                    orderCreationDate = DateTime.Now
                 };
                 
                 await applicationDbContext.orders.AddAsync(order);
@@ -140,6 +242,7 @@ namespace APIEasyPrint.Repositories
 
         public async Task<AddItemApiModel.ResponseByOneItem> PostItemsDetailes(AddItemApiModel.Request OrderDetailes)
         {
+            if (OrderDetailes.isCourceMaterial == true) {
                 Item newItem = new Item
                 {
                     itemId = new Guid(),
@@ -151,21 +254,53 @@ namespace APIEasyPrint.Repositories
                     totalPriceOfTheItem = OrderDetailes.totalPriceOfTheItem,
                     printingShopId = new Guid(OrderDetailes.printingShopId)
                 };
-                
+
                 await applicationDbContext.items.AddAsync(newItem);
                 await applicationDbContext.SaveChangesAsync();
 
 
-            AddItemApiModel.ResponseByOneItem rsulte = new AddItemApiModel.ResponseByOneItem
-            {
-                itemId = newItem.itemId.ToString(),
-                itemPrice=newItem.totalPriceOfTheItem,
-                orderId=newItem.orderId.ToString(),
-                printingShopID=newItem.printingShopId.ToString(),
-                errorMassage="",
-                
-            };
+                AddItemApiModel.ResponseByOneItem rsulte = new AddItemApiModel.ResponseByOneItem
+                {
+                    itemId = newItem.itemId.ToString(),
+                    itemPrice = newItem.totalPriceOfTheItem,
+                    orderId = newItem.orderId.ToString(),
+                    printingShopID = newItem.printingShopId.ToString(),
+                    errorMassage = "",
+
+                };
                 return rsulte;
+            }
+            else
+            {
+                Item newItem = new Item
+                {
+                    itemId = new Guid(),
+                    orderId = new Guid(OrderDetailes.orderId),
+                    isPrintingOrder = OrderDetailes.isPrintingOrder,
+                    isCourceMaterial = OrderDetailes.isCourceMaterial,
+                    courceMaterialId = new Guid("23C55B9B-8835-43A3-C7A5-08D8FCB452F0"), //defult null cource Material
+                    docId = new Guid("AAAAAAAA-0101-0101-0101-C00000000000"), //defult null document
+                    totalPriceOfTheItem = OrderDetailes.totalPriceOfTheItem,
+                    printingShopId = new Guid(OrderDetailes.printingShopId),
+                    ThePrintingDetailes = OrderDetailes.description
+                };
+
+                await applicationDbContext.items.AddAsync(newItem);
+                await applicationDbContext.SaveChangesAsync();
+
+
+                AddItemApiModel.ResponseByOneItem rsulte = new AddItemApiModel.ResponseByOneItem
+                {
+                    itemId = newItem.itemId.ToString(),
+                    itemPrice = newItem.totalPriceOfTheItem,
+                    orderId = newItem.orderId.ToString(),
+                    printingShopID = newItem.printingShopId.ToString(),
+                    errorMassage = "",
+
+                };
+                return rsulte;
+            }
+            
 
             }
 
@@ -281,6 +416,26 @@ namespace APIEasyPrint.Repositories
             }
                 ).ToList();
             return resulte;
+        }
+
+        public async Task<string> PostPromotionCode(PrivatePromotionCodeApiModel.Request promo)
+        {
+            PrivatePromotionCode privatePromotionCode = new PrivatePromotionCode
+            {
+                privatePromotionCodeId = new Guid(),
+                privatePromotionCodeString = promo.privatePromotionCodeString,
+                startDate = DateTime.Now,
+                CustomerId = new Guid(promo.CustomerId),
+                printingShopId = new Guid(promo.printingShopId),
+                isExpired = false,
+                isUsed = false
+
+            };
+
+          await    applicationDbContext.privatePromotionCodes.AddAsync(privatePromotionCode);
+          await applicationDbContext.SaveChangesAsync();
+
+           return "success";
         }
 
 

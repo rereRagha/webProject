@@ -64,6 +64,7 @@ namespace APIEasyPrint.Controllers
                 response.Data.PhoneNumber = driver.PhoneNumber;
                 response.Data.Id = driver.Id.ToString();
                 response.Data.UserName = driver.UserName;
+                response.Data.PrinterId = driver.IDPrinter.ToString();
 
                 return Ok(response);
             }

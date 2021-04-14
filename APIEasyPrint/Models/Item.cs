@@ -15,6 +15,8 @@ namespace APIEasyPrint.Models
 
         public double totalPriceOfTheItem { set; get; }
 
+        public string ThePrintingDetailes {set; get; }
+
 
         [ForeignKey("CourceMaterialFK")]
         public Guid courceMaterialId { set; get; }

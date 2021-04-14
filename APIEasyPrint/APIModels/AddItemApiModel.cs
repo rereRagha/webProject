@@ -18,6 +18,7 @@ namespace APIEasyPrint.APIModels
             public string  printingShopId { set; get; }
             public string customerId { set; get; }
             public int numberOfItems { set; get; }
+            public string description { set; get; }
 
         }
 
@@ -46,6 +47,11 @@ namespace APIEasyPrint.APIModels
             public string printingShopID { set; get; }
             public string courseID { set; get; }
             public string courseName { set; get; }
+
+            public bool isCourceMaterial { get; set; }
+            public bool isPrintingOrder { get; set; }
+
+            public string servicName { get; set;  }
 
         }
 

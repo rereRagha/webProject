@@ -114,5 +114,13 @@ namespace APIEasyPrint.Repositories
             return "File has been Upladed ";
         }
 
+
+        public async Task<string> PostNewDriverDetailes(DeliveryDriver driver)
+        {
+            await applicationDbContext.deliveryDrivers.AddAsync(driver);
+            await applicationDbContext.SaveChangesAsync();
+            return "succss";
+
+        }
     }
 }

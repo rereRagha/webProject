@@ -1,11 +1,9 @@
-﻿using APIEasyPrint.APIModels;
-using APIEasyPrint.Interfaces;
+﻿using APIEasyPrint.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,45 +11,41 @@ namespace APIEasyPrint.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors]
-
-    public class PromotionCodeController : ControllerBase
+    public class UpdateStatusCustomerController : ControllerBase
     {
         private readonly IOrdersInterface _ordersInterface;
 
-        public PromotionCodeController(IOrdersInterface _ordersInterface)
+        public UpdateStatusCustomerController(IOrdersInterface _ordersInterface)
         {
             this._ordersInterface = _ordersInterface;
         }
-        // GET: api/<PromotionCodeController>
+        // GET: api/<UpdateStatusCustomer>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<PromotionCodeController>/5
-        [HttpGet("{id}")]
-        public List<PrivatePromotionCodeApiModel.Response> Get(string id)
+        // GET api/<UpdateStatusCustomer>/5
+        [HttpGet("{id}/{total}")]
+        public async Task<string> Get(string id, double total)
         {
-            return _ordersInterface.GetPromotionCode(new Guid(id));
+            return await _ordersInterface.UpdateCustomerOrderStatusAsync(new Guid(id), total);
         }
 
-        // POST api/<PromotionCodeController>
+        // POST api/<UpdateStatusCustomer>
         [HttpPost]
-        public async Task<string> Post(PrivatePromotionCodeApiModel.Request promo)
+        public void Post([FromBody] string value)
         {
-            return await _ordersInterface.PostPromotionCode(promo);
-
         }
 
-        // PUT api/<PromotionCodeController>/5
+        // PUT api/<UpdateStatusCustomer>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<PromotionCodeController>/5
+        // DELETE api/<UpdateStatusCustomer>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

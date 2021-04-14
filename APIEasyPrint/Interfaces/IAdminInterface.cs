@@ -15,6 +15,8 @@ namespace APIEasyPrint.Interfaces
         public Task<Customer> PostCustomerDetailes(Customer NewCustomer);
         public DeliveryDriver FindDriverByEmail(string driverEmail);
         public DeliveryDriver GetDriverDetailes(Guid DriverId);
+        public Task<string> PostNewDriverDetailes(DeliveryDriver driver);
+
         public Task UpdateCustomerDetailes(UpdateCustomerInfoApiModel.Request updatedCustomer);
         public  Task<string> UploadFile(UploadFileApiModel.Request FileInfo);
 

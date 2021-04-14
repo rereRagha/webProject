@@ -15,6 +15,7 @@ namespace APIEasyPrint.Models
 
        
         public PrintingShop printingShop { get; set; }
+        public Guid IDPrinter { get; set; }
         public List<Order> orders { set; get; }
     }
 }
