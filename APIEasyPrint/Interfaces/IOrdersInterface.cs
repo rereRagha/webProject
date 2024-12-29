@@ -1,4 +1,5 @@
 ﻿using APIEasyPrint.APIModels;
+using APIEasyPrint.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,17 @@ namespace APIEasyPrint.Interfaces
         public  Task<AddressApiModel.Response> UpdateAdress(AddressApiModel.Request address);
         public AddressApiModel.Response GetAddress(Guid UserId);
         public Task DeleteItem(Guid itemId);
+
         public List<PrivatePromotionCodeApiModel.Response> GetPromotionCode(Guid UserId);
+        public DriverOrders.Response GetFirstOrder(Guid PrinterId);
+
         public Task<string> PostPromotionCode(PrivatePromotionCodeApiModel.Request promo); 
         public List<OrderApiModel.Response> GetOrdersByPrintingShopID(Guid orderId);
 
+        public List<Notification> GetNotificationByParentID(Guid parentId);
+        public List<Notification> GetNotificationByTeatcherID(Guid teatcherId);
+        public List<Notification> GetAllNotification();
+        public List<GlobalNotification> GetAllGlobalNotification();
 
     }
 }

@@ -37,19 +37,18 @@ namespace APIEasyPrint.Controllers
 
         // POST api/<DriverRegisterController>
         [HttpPost]
-        public async Task<string> Post(DriverRegister.Request request)
+        public async Task<Teatcher> Post(DriverRegister.Request request)
         {
-            var deliveryDriver = new DeliveryDriver()
+            var teatcher = new Teatcher()
             {
                 Id = Guid.NewGuid(),
                 Email = request.Email,
                 UserName = request.Email,
                 PasswordHash = request.PasswordHash,
                 PhoneNumber = request.PhoneNumber,
-                IDPrinter = new Guid( request.PrintrtId)
             };
 
-            return await _adminInterface.PostNewDriverDetailes(deliveryDriver);
+            return await _adminInterface.PostTeatcherDetailes(teatcher);
              
         }
 

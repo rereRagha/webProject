@@ -39,11 +39,10 @@ namespace APIEasyPrint.Data
         public DbSet<Suggestion> suggestions { get; set; }
         public DbSet<Images> images { get; set; }
 
-
-
-
-
-
+        public DbSet<Notification> notifications { get; set; }
+        public DbSet<GlobalNotification> globalNotifications { get; set; }
+        public DbSet<Parent> parents { get; set; }
+        public DbSet<Teatcher> teatchers{ get; set; }
 
 
     }

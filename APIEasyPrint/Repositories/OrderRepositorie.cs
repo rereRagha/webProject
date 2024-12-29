@@ -68,6 +68,8 @@ namespace APIEasyPrint.Repositories
             List<OrderApiModel.Response> responses = itemsTemp.Select(i => new OrderApiModel.Response
             {
                 Id = i.orderId.ToString(),
+                address = applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId),
+                CustomerPhome = applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).PhoneNumber,
                 itemId = i.itemId.ToString(),
                 items = items.Where(I => I.orderId == i.orderId).Select(X => new OrderApiModel.ItemInfo
                 {
@@ -177,6 +179,60 @@ namespace APIEasyPrint.Repositories
 
         }
 
+
+        public DriverOrders.Response GetFirstOrder(Guid PrinterId)
+        {
+            // List<Item> items = applicationDbContext.items.Where(I => I.printingShopId == PrinterId).ToList();
+
+
+
+
+            //List< DriverOrders.Response> responses = items.Select(i => new DriverOrders.Response
+            // {
+            //     orderId = i.orderId.ToString(),
+            //     adressLine= applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).adressLine,
+            //     city= applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).city,
+            //     CustomerEmail= applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).UserName,
+            //     CustomerPhome= applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).PhoneNumber,
+            //     neighborhood= applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).neighborhood,
+            //     street= applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).street,
+            //     total = applicationDbContext.orders.Find(i.orderId).total,
+            //     deleveryStatusNumber = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).StatusNo,
+            //     deleveryStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).statusName
+            // }
+            //    ).ToList();
+
+
+            List<Item> items = applicationDbContext.items.Where(I => I.printingShopId == PrinterId).ToList();
+            List<Item> itemsTemp = new List<Item>();
+            foreach (Item u1 in items)
+            {
+                bool duplicatefound = false;
+                foreach (Item u2 in itemsTemp)
+                    if (u1.orderId == u2.orderId)
+                        duplicatefound = true;
+
+                if (!duplicatefound)
+                    itemsTemp.Add(u1);
+            }
+            List<DriverOrders.Response> responses = itemsTemp.Select(i => new DriverOrders.Response
+            {
+                orderId = i.orderId.ToString(),
+                city = applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).city,
+                neighborhood = applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).neighborhood,
+                street = applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).street,
+                adressLine = applicationDbContext.addresses.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).adressLine,
+                CustomerPhome = applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).PhoneNumber,               
+                deleveryStatus = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).statusName,
+                deleveryStatusNumber = applicationDbContext.statuses.Find(applicationDbContext.orders.Find(i.orderId).deliveryStatusStatusId).StatusNo,
+                CustomerEmail = applicationDbContext.customers.Find(applicationDbContext.orders.Find(i.orderId).CustomerId).UserName,
+                total = applicationDbContext.orders.Find(i.orderId).total,
+            }
+                ).ToList();
+
+            return responses.FirstOrDefault(i => i.deleveryStatusNumber == 4);
+
+        }
 
         public async Task<AddItemApiModel.Response> PostOrderDetailes(AddItemApiModel.Request OrderDetailes)
         {
@@ -429,7 +485,6 @@ namespace APIEasyPrint.Repositories
                 printingShopId = new Guid(promo.printingShopId),
                 isExpired = false,
                 isUsed = false
-
             };
 
           await    applicationDbContext.privatePromotionCodes.AddAsync(privatePromotionCode);
@@ -438,9 +493,33 @@ namespace APIEasyPrint.Repositories
            return "success";
         }
 
+        public List<Notification> GetNotificationByParentID(Guid parentId)
+        {
+            List<Notification> notification = applicationDbContext.notifications.Where(I => I.parentId == parentId).ToList();
 
+            return notification;
+        }
 
+        public List<Notification> GetNotificationByTeatcherID(Guid teatcherId)
+        {
+            List<Notification> notification = applicationDbContext.notifications.Where(I => I.teatcherId == teatcherId).ToList();
 
+            return notification;
+        }
+
+        public List<Notification> GetAllNotification()
+        {
+            List<Notification> notification = applicationDbContext.notifications.ToList();
+
+            return notification;
+        }
+
+        public List<GlobalNotification> GetAllGlobalNotification()
+        {
+            List<GlobalNotification> notification = applicationDbContext.globalNotifications.ToList();
+
+            return notification;
+        }
 
     }
 

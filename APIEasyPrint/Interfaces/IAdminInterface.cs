@@ -20,5 +20,10 @@ namespace APIEasyPrint.Interfaces
         public Task UpdateCustomerDetailes(UpdateCustomerInfoApiModel.Request updatedCustomer);
         public  Task<string> UploadFile(UploadFileApiModel.Request FileInfo);
 
+        public  Task<Teatcher> PostTeatcherDetailes(Teatcher teatcher);
+        public  Task<Parent> PostParentDetailes(Parent parent);
+        public Parent FindParentByEmail(string email);
+        public Teatcher FindTeatcherByEmail(string email);
+
     }
 }

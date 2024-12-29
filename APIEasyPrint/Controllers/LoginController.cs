@@ -2,11 +2,8 @@
 using APIEasyPrint.Interfaces;
 using APIEasyPrint.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Cors;
-using System.Threading.Tasks;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace APIEasyPrint.Controllers
@@ -46,27 +43,56 @@ namespace APIEasyPrint.Controllers
             var response = new ApiRespnse<LoginApiModel.Response>();
 
 
-            Customer customer = new Customer();
+            Parent parent = new Parent();
 
 
-            customer =  _adminInterface.FindCustomerByEmail(request.Email);
+            parent =  _adminInterface.FindParentByEmail(request.Email);
 
 
-            if (customer == null)
+            if (parent == null)
             {
-                response.Data = new LoginApiModel.Response();
-                response.Data.ErrorMessage = " هذا الأيميل غير موجود, هل تريد انشاء حساب جديد ؟";
-                return Ok(response);
+
+                Teatcher teacher = new Teatcher();
+                teacher = _adminInterface.FindTeatcherByEmail(request.Email);
+
+                if (teacher == null)
+                {
+                    response.Data = new LoginApiModel.Response();
+                    response.Data.ErrorMessage = " هذا الأيميل غير موجود, هل تريد انشاء حساب جديد ؟";
+                    return Ok(response);
+                }
+                else
+                {
+                    if (teacher.PasswordHash == request.PasswordHash)
+                    {
+                        response.Data = new LoginApiModel.Response();
+                        response.Data.Email = teacher.Email;
+                        response.Data.EmailConfiremd = teacher.EmailConfirmed;
+                        response.Data.PhoneNumber = teacher.PhoneNumber;
+                        response.Data.Id = teacher.Id.ToString();
+                        response.Data.UserName = teacher.UserName;
+
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        response.Data = new LoginApiModel.Response();
+                        response.Data.ErrorMessage = " رقم سري خاطئ , الرجاء المحاولة مجدداً";
+                        return Ok(response);
+                    }
+
+                }
+               
             }
 
-            if (customer.PasswordHash == request.PasswordHash)
+            if (parent.PasswordHash == request.PasswordHash)
             {
                 response.Data = new LoginApiModel.Response();
-                response.Data.Email = customer.Email;
-                response.Data.EmailConfiremd = customer.EmailConfirmed;
-                response.Data.PhoneNumber = customer.PhoneNumber;
-                response.Data.Id = customer.Id.ToString();
-                response.Data.UserName = customer.UserName;
+                response.Data.Email = parent.Email;
+                response.Data.EmailConfiremd = parent.EmailConfirmed;
+                response.Data.PhoneNumber = parent.PhoneNumber;
+                response.Data.Id = parent.Id.ToString();
+                response.Data.UserName = parent.UserName;
 
                 return Ok(response);
             }

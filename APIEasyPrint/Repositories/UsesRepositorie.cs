@@ -122,5 +122,37 @@ namespace APIEasyPrint.Repositories
             return "succss";
 
         }
+
+        public async Task<Teatcher> PostTeatcherDetailes(Teatcher teatcher)
+        {
+
+            await applicationDbContext.teatchers.AddAsync(teatcher);
+            await applicationDbContext.SaveChangesAsync();
+
+            return teatcher;
+        }
+
+        public async Task<Parent> PostParentDetailes(Parent parent)
+        {
+
+            await applicationDbContext.parents.AddAsync(parent);
+            await applicationDbContext.SaveChangesAsync();
+
+            return parent;
+        }
+
+        public Parent FindParentByEmail(string email)
+        {
+            var parent = applicationDbContext.parents.FirstOrDefault(x => x.Email == email);
+
+            return parent;
+        }
+
+        public Teatcher FindTeatcherByEmail(string email)
+        {
+            var teatcher = applicationDbContext.teatchers.FirstOrDefault(x => x.Email == email);
+
+            return teatcher;
+        }
     }
 }

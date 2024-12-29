@@ -20,6 +20,10 @@ namespace APIEasyPrint.APIModels
         public class Response
         {
             public string Id { set; get; }
+            public string CustomerPhome { set; get; }
+            public string CustomerEmail { set; get; }
+            public Address  address { set; get; }
+
             public string itemId { set; get; }
             public int orderStatusId { set; get; }
             public List<ItemInfo> items { set; get; }

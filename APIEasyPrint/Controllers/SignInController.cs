@@ -52,7 +52,7 @@ namespace APIEasyPrint.Controllers
                 return response;
             }
 
-            var appUser = new Customer()
+            var appUser = new Parent()
             {
                 Id = Guid.NewGuid(),
                 Email = request.Email,
@@ -61,7 +61,7 @@ namespace APIEasyPrint.Controllers
                 PhoneNumber = request.PhoneNumber
             };
 
-            var result = await _adminInterface.PostCustomerDetailes(appUser);
+            var result = await _adminInterface.PostParentDetailes(appUser);
 
 
             response.Data = new SignInApiModel.Response()
